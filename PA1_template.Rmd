@@ -41,6 +41,12 @@ s1 <- with(dat, tapply(steps,date,na.rm=TRUE,sum))
 # Create a histogram with ggplot2
 library(ggplot2)
 qplot(s1, geom="histogram", xlab = "Total steps per day", ylab = "Frequency", binwidth=400)
+
+# To send PNG
+dev.copy(png, file="histogram_without_NA.png")
+
+#Close device
+dev.off()
 ```
 
 * mean
@@ -68,6 +74,12 @@ library(dplyr)
 ``` {r series}
         s2 <- dat %>% filter(!is.na(steps)) %>% group_by(interval) %>% summarise(steps = mean(steps))
         ggplot(data=s2,aes(interval,steps)) + geom_line() + xlab("5 minute interval") + ylab("Average of number steps")
+        
+        # To send PNG
+        dev.copy(png, file="series_without_NA.png")
+
+        #Close device
+        dev.off()
 ```
 
 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
@@ -116,7 +128,12 @@ The total number are: `r numMiss`
         # to obtein sum from each day in data
         s5 <- with(s4, tapply(steps,date,na.rm=TRUE,sum))
         qplot(s5, geom="histogram", xlab = "Total steps per day", ylab = "Frequency", binwidth=400)
+        
+        # To send PNG
+        dev.copy(png, file="histogram_All.png")
 
+        #Close device
+        dev.off()
 ```
 
 * mean
@@ -147,5 +164,11 @@ median(s5)
 ``` {r series2}
         s6 <- s4 %>% group_by(interval,typeDate) %>% summarise(steps = mean(steps))
         ggplot(data=s6,aes(interval,steps)) + geom_line() + facet_grid(typeDate ~ .) + xlab("5 minute interval") + ylab("Average of number steps")
+        
+         # To send PNG
+        dev.copy(png, file="series_All.png")
+
+        #Close device
+        dev.off()
 ```
 
